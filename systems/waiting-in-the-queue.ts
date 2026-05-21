@@ -7,8 +7,8 @@ import { getName } from '../utils/names.js';
 
 const index = buildIndex([PersonalDetails, Queue]);
 
-const NUMBER_OF_CUSTOMERS = 12;
-const NUMBER_OF_SERVERS = 2;
+const NUMBER_OF_CUSTOMERS = 7;
+const NUMBER_OF_SERVERS = 1;
 
 export function initialise() {
   for (let i = 0; i < NUMBER_OF_CUSTOMERS; i++) {
