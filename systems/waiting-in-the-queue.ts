@@ -3,6 +3,7 @@ import Queue from '../components/queue';
 import MakingAnOrder, { lemonade } from '../components/making-an-order.js';
 import buildIndex from '../lib/build-index.js';
 import * as Entities from '../entities/index.js';
+import { getName } from '../utils/names.js';
 
 const index = buildIndex([PersonalDetails, Queue]);
 
@@ -13,14 +14,14 @@ export function initialise() {
   for (let i = 0; i < NUMBER_OF_CUSTOMERS; i++) {
     let entity = Entities.create();
     PersonalDetails.add(entity, {
-      name: `George the ${i}th`,
+      name: getName(entity),
     });
     Queue.add(entity, { role: 'CUSTOMER', position: undefined });
   }
 
   for (let i = 0; i < NUMBER_OF_SERVERS; i++) {
     let entity = Entities.create();
-    PersonalDetails.add(entity, { name: `Jimberly ${i}` });
+    PersonalDetails.add(entity, { name: getName(entity) });
     Queue.add(entity, { role: 'SERVER' });
   }
 }

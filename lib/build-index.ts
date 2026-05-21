@@ -7,13 +7,11 @@ export default function buildIndex(components: Component<any>[]) {
   return {
     getEntities() {
       const cursors = components.map((c) => {
-        // TODO: components should keep their own **sorted** list
-        // of entities
         const items = c.entities;
         const idx = 0;
         return { idx, items, name: c.name } as Cursor;
       });
-      //console.log(cursors);
+
       const [first, ...rest] = cursors;
       const join = [];
       outer: for (let i = 0; i < first.items.length; i++) {
@@ -40,6 +38,7 @@ export default function buildIndex(components: Component<any>[]) {
             continue outer;
           }
         }
+
         join.push(candidate);
       }
 
