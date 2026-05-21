@@ -15,6 +15,34 @@ export interface Component<T> {
   entities: Entity[];
 }
 
+function insert(entity: Entity, arr: Entity[]) {
+  // arr is sorted so that the largest entities are
+  // at the end
+  for (let i = arr.length - 1; i >= 0; i--) {
+    if (arr[i] < entity) {
+      arr.splice(i + 1, 0, entity);
+      return;
+    }
+  }
+
+  arr.splice(0, 0, entity);
+}
+
+function remove(entity: Entity, arr: Entity[]) {
+  // arr is sorted so that the largest entities are
+  // at the end
+  for (let i = arr.length - 1; i >= 0; i--) {
+    if (arr[i] === entity) {
+      arr.splice(i, 1);
+      return;
+    }
+
+    if (arr[i] < entity) {
+      return;
+    }
+  }
+}
+
 export function create<T>(name: string): Component<T> {
   const map = new Map<Entity, T>();
   const additions = [] as Addition<T>[];
@@ -32,16 +60,17 @@ export function create<T>(name: string): Component<T> {
     removals,
     map,
     entities,
-    update: () => {
+    update() {
       for (const r of removals) {
         map.delete(r.entity);
+        remove(r.entity, entities);
       }
       removals.splice(0, removals.length);
       for (const a of additions) {
         map.set(a.entity, a.component);
+        insert(a.entity, entities);
       }
       additions.splice(0, additions.length);
-      entities.splice(0, entities.length, ...map.keys());
     },
 
     add(entity: Entity, component: T) {
