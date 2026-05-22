@@ -1,6 +1,7 @@
 - [ ] Report your $$$ every now and then
 - [ ] Making drinks should involve collecting ingredients and then mixing the drink
 - [ ] Ingredients should run out
+- [ ] Add boba pearls
 - [ ] Some guy should show up and deliver more ingredients (for $$$)
 - [ ] Customers should choose something from a menu
 - [ ] Customers leave the queue if they get bored

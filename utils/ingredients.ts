@@ -1,7 +1,11 @@
 import * as F from './flavours';
 import * as C from './colours';
+import * as A from './allergens';
 
 export default {
+  // TODO: Taro/Ube
+  // TODO: Caramel
+  // TODO: Salt
   pineapple: {
     // colour
     [C.YELLOW]: 0.7,
@@ -39,6 +43,7 @@ export default {
     [F.FLORAL]: 0.2,
     [F.SWEET]: 0.6,
     [F.SOUR]: 0.4,
+    [A.BERRIES]: 1,
   },
 
   yogurt: {
@@ -75,6 +80,7 @@ export default {
     [F.SOUR]: 0.3,
     [F.ASTRINGENT]: 0.3,
     [F.FLORAL]: 0.1,
+    [A.BERRIES]: 1,
   },
 
   spinach: {
@@ -130,6 +136,17 @@ export default {
     [F.SWEET]: 0.1,
   },
 
+  'green tea': {
+    [C.YELLOW]: 0.5,
+    [C.BLUE]: 0.3,
+    [C.SHINY]: 0.2,
+    [F.BITTER]: 0.4,
+    [F.ASTRINGENT]: 0.3,
+    [F.GRASSY]: 0.3,
+    [F.FLORAL]: 0.2,
+    [F.SWEET]: 0.1,
+  },
+
   'iced coffee': {
     [C.BLACK]: 0.6,
     [C.WHITE]: 0.1,
@@ -137,5 +154,56 @@ export default {
     [F.BITTER]: 0.7,
     [F.SWEET]: 0.1,
     [F.SMOKY]: 0.2,
+  },
+
+  // by milk simplicitor I mean cow milk, from a cow
+  milk: {
+    [C.WHITE]: 0.8,
+    [C.SHINY]: 0.2,
+    [F.FAT]: 0.5,
+    [F.SWEET]: 0.2,
+    [F.CALCIUM]: 0.2,
+    [F.UMAMI]: 0.1,
+    [A.DAIRY]: 1,
+  },
+
+  'oat milk': {
+    [C.WHITE]: 0.6,
+    [C.YELLOW]: 0.3,
+    [C.SHINY]: 0.1,
+    [F.SWEET]: 0.4,
+    [F.GRASSY]: 0.3,
+    [F.FAT]: 0.2,
+    [F.UMAMI]: 0.1,
+  },
+
+  'soy milk': {
+    [C.WHITE]: 0.6,
+    [C.YELLOW]: 0.3,
+    [C.SHINY]: 0.1,
+    [F.SWEET]: 0.4,
+    [F.GRASSY]: 0.3,
+    [F.FAT]: 0.2,
+    [F.UMAMI]: 0.1,
+    [A.SOY]: 1,
+  },
+
+  'coconut milk': {
+    [C.WHITE]: 0.7,
+    [C.SHINY]: 0.3,
+    [F.FAT]: 0.7,
+    [F.SWEET]: 0.3,
+    [F.VANILLA]: 0.2,
+  },
+
+  'almond milk': {
+    [C.WHITE]: 0.7,
+    [C.YELLOW]: 0.2,
+    [C.SHINY]: 0.1,
+    [F.SWEET]: 0.3,
+    [F.FAT]: 0.3,
+    [F.BITTER]: 0.2,
+    [F.UMAMI]: 0.1,
+    [F.ASTRINGENT]: 0.1,
   },
 };
