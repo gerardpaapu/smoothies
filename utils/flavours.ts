@@ -20,10 +20,16 @@ export const COOL = 'FLAVOUR/COOL';
 // the tactile experience of tannins in your saliva
 // think: red wine, unripe banana
 export const ASTRINGENT = 'FLAVOUR/ASTRINGENT';
+// tastes "sour", but has additional sensations
+// including olfactory and pain sensations
+// think: vinegar, wine, pickles
+export const ACETICACID = 'FLAVOUR/ACETICACID';
 // think: szechuan chili
 export const NUMBNESS = 'FLAVOUR/NUMBNESS';
 
 // Smells that we confuse with taste
+// ---------------------------------
+
 export const VANILLA = 'FLAVOUR/VANILLA';
 export const CINNAMON = 'FLAVOUR/CINNAMON';
 export const FLORAL = 'FLAVOUR/FLORAL';
@@ -31,6 +37,10 @@ export const FLORAL = 'FLAVOUR/FLORAL';
 export const CITRUS = 'FLAVOUR/CITRUS';
 // smoky makes us think umami and bitter
 export const SMOKY = 'FLAVOUR/SMOKY';
+// cut grass, vegetative, pine needles,
+// think: kiwifruit, jalapeno, capsicum,
+// matcha, olive oil, wheat grass
+export const GRASSY = 'FLAVOUR/GRASSY';
 
 // We include some complex ingredients as atomic flavours
 // even though they aren't really so that it's easy to
