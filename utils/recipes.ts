@@ -1,7 +1,7 @@
 import ingredients from './ingredients';
 
-type IngredientName = keyof typeof ingredients;
-type Ingredients = Partial<Record<IngredientName, number>>;
+export type IngredientName = keyof typeof ingredients;
+export type Ingredients = Partial<Record<IngredientName, number>>;
 
 export type Recipe = {
   name: string;

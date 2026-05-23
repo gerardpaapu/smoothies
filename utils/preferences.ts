@@ -34,6 +34,8 @@ type Experience = { name: string; traits: Traits };
 // includes all the named traits and to the degree
 // of the preference projected onto the experience
 
+const hasOwn = Object.prototype.hasOwnProperty;
+
 const match = (
   preference: Preference,
   experience: Experience,
@@ -45,8 +47,8 @@ const match = (
   const exp = experience.traits;
 
   for (const k in pref) {
-    if (pref.hasOwnProperty(k)) {
-      if (exp.hasOwnProperty(k)) {
+    if (hasOwn.call(pref, k)) {
+      if (hasOwn.call(exp, k)) {
         dotProduct += pref[k] * exp[k];
         t += exp[k] * exp[k];
       } else {

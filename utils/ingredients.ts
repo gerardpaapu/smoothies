@@ -5,6 +5,14 @@ import * as T from './textures';
 import { HOT } from './temperature';
 
 export default {
+  'peanut butter': {
+    [A.PEANUTS]: 1,
+    [F.FAT]: 0.4,
+    [F.SALTY]: 0.2,
+    [F.EARTHY]: 0.1,
+    [T.CREAMY]: 0.2,
+  },
+
   'taro/ube': {
     [C.BLUE]: 0.4,
     [C.RED]: 0.4,

@@ -2,6 +2,8 @@ import makingAnOrder from '../components/making-an-order';
 import personalDetails from '../components/personal-details';
 import queue from '../components/queue';
 import buildIndex from '../lib/build-index';
+import { getReview } from '../utils/preferences';
+import { prepare } from '../utils/prepare';
 
 const index = buildIndex([personalDetails, makingAnOrder]);
 
@@ -28,6 +30,26 @@ export function update() {
             );
             makingAnOrder.remove(dude.forCustomer);
             makingAnOrder.remove(entity);
+
+            const taster = personalDetails.get(dude.forCustomer)!.taster;
+            const review = getReview(taster, {
+              name: dude.order.name,
+              traits: prepare(dude.order),
+            });
+            const customerName = personalDetails.get(dude.forCustomer)?.name;
+
+            console.log(`review = ${review}`);
+            if (review > 0.5) {
+              console.log(`${customerName} enjoyed their ${dude.order.name}`);
+            } else if (review < -0.5) {
+              console.log(
+                `${customerName} didn't like their ${dude.order.name}`,
+              );
+            } else {
+              console.log(
+                `${customerName} thought their ${dude.order.name} was just okay`,
+              );
+            }
 
             console.log(`${name} is ready to serve another customer`);
             queue.add(entity, { role: 'SERVER' });

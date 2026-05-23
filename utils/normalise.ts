@@ -10,7 +10,7 @@ export default function normalise(vec: Record<string, number>, scale = 1) {
   }
 
   const length = Math.sqrt(length2) / scale;
-  const result = {} as Record<string, number>;
+  const result = Object.create(null) as Record<string, number>;
   for (let k in vec) {
     if (hasOwn.call(vec, k)) {
       result[k] = vec[k] / length;

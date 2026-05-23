@@ -5,6 +5,7 @@ import MakingAnOrder from '../components/making-an-order.js';
 import buildIndex from '../lib/build-index.js';
 import * as Entities from '../entities/index.js';
 import { getName } from '../utils/names.js';
+import { randomTaster } from '../utils/profiles.js';
 
 const index = buildIndex([PersonalDetails, Queue]);
 
@@ -19,6 +20,7 @@ export function initialise() {
       name: getName(entity),
       cash: 100,
       mood: { angry: 0, sad: 0, excited: 100 },
+      taster: randomTaster(),
     });
     Queue.add(entity, { role: 'CUSTOMER', position: undefined });
   }
@@ -29,6 +31,7 @@ export function initialise() {
       name: getName(entity),
       cash: 0,
       mood: { angry: 0, sad: 0, excited: 100 },
+      taster: randomTaster(),
     });
     Queue.add(entity, { role: 'SERVER' });
   }

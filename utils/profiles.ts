@@ -12,9 +12,30 @@ export const textureHater: Taster = [
   hate({ [T.SOFT_JELLY]: 100 }),
 ];
 
-// this guy fukin loves lemonade
+// a lot of other people love textures in drinks;
+export const textureLover: Taster = [
+  love({ [T.CHEWY]: 100 }),
+  love({ [T.FIRM_JELLY]: 100 }),
+  love({ [T.SOFT_JELLY]: 100 }),
+];
+
+// they love cronch
+export const croncher: Taster = [love({ [T.CRUNCHY]: 100 })];
+
+// this guy fukin loves ice-cold lemonade
 export const sweetSourCold: Taster = [
   love({ [F.SWEET]: 50, [F.SOUR]: 40, [HOT]: -100 }),
+];
+
+// just likes "normal" fruity smoothies
+export const fruity: Taster = [
+  love({
+    [F.FLORAL]: 20,
+    [F.SWEET]: 50,
+    [F.SOUR]: 14,
+    [F.ASTRINGENT]: 10,
+    [F.VANILLA]: 10,
+  }),
 ];
 
 // I can't drink that
@@ -22,18 +43,57 @@ export const peanutAllergy: Taster = [hate({ [A.PEANUTS]: 1 }, 100)];
 
 // girly in a non-gender specific sense
 export const pumpkinSpiceGirly: Taster = [
-  love({
-    [C.YELLOW]: 0.5,
-    [C.RED]: 0.3,
-    [C.BLACK]: 0.1,
-    [C.SHINY]: 0.1,
-    [F.SWEET]: 0.6,
-    [F.CINNAMON]: 0.7,
-    [F.EARTHY]: 0.4,
-    [F.SPICY]: 0.2,
-    [F.SMOKY]: 0.1,
-    [F.VANILLA]: 0.3,
-  }),
+  love(
+    {
+      [C.YELLOW]: 0.5,
+      [C.RED]: 0.3,
+      [C.BLACK]: 0.1,
+      [C.SHINY]: 0.1,
+      [F.SWEET]: 0.6,
+      [F.CINNAMON]: 0.7,
+      [F.EARTHY]: 0.4,
+      [F.SPICY]: 0.2,
+      [F.SMOKY]: 0.1,
+      [F.VANILLA]: 0.3,
+      [HOT]: 1,
+    },
+    2,
+  ),
 ];
 
-export const prefabs = [];
+export function randomTaster(): Taster {
+  const result = [] as Taster;
+  const texture = Math.random();
+  if (texture < 0.2) {
+    result.push(...textureHater);
+  }
+  if (texture > 0.8) {
+    result.push(...textureLover);
+  }
+
+  if (Math.random() < 0.3) {
+    result.push(...pumpkinSpiceGirly);
+  }
+
+  if (Math.random() < 0.3) {
+    result.push(...sweetSourCold);
+  }
+
+  if (Math.random() < 0.5) {
+    result.push(...fruity);
+  }
+
+  if (Math.random() < 0.1) {
+    result.push(...croncher);
+  }
+
+  if (Math.random() < 0.05) {
+    result.push(...peanutAllergy);
+  }
+
+  if (result.length === 0) {
+    result.push(...fruity);
+  }
+
+  return result;
+}
