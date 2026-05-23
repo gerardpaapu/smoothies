@@ -1,11 +1,51 @@
 import * as F from './flavours';
 import * as C from './colours';
 import * as A from './allergens';
+import * as T from './textures';
+import { HOT } from './temperature';
 
 export default {
-  // TODO: Taro/Ube
-  // TODO: Caramel
-  // TODO: Salt
+  'taro/ube': {
+    [C.BLUE]: 0.4,
+    [C.RED]: 0.4,
+    [C.WHITE]: 0.2,
+    [F.SWEET]: 0.6,
+    [F.EARTHY]: 0.4,
+    [F.VANILLA]: 0.3,
+    [F.UMAMI]: 0.1,
+  },
+
+  ice: {
+    [T.CRUNCHY]: 0.3,
+    [HOT]: -1,
+  },
+
+  cinammon: {
+    [F.CINNAMON]: 0.2,
+  },
+
+  caramel: {
+    [C.YELLOW]: 0.4,
+    [C.RED]: 0.4,
+    [C.BLACK]: 0.1,
+    [C.SHINY]: 0.1,
+    [F.SWEET]: 0.9,
+    [F.BITTER]: 0.3,
+    [F.SMOKY]: 0.2,
+    [F.FAT]: 0.3,
+    [F.SALTY]: 0.1,
+    [A.DAIRY]: 1,
+  },
+
+  'seaspray (artificial)': {
+    [C.SHINY]: 0.6,
+    [C.BLUE]: 0.3,
+    [C.WHITE]: 0.1,
+    [F.SALTY]: 0.7,
+    [F.UMAMI]: 0.2,
+    [F.FLORAL]: 0.1,
+  },
+
   pineapple: {
     // colour
     [C.YELLOW]: 0.7,
@@ -205,5 +245,56 @@ export default {
     [F.BITTER]: 0.2,
     [F.UMAMI]: 0.1,
     [F.ASTRINGENT]: 0.1,
+  },
+
+  'pumpkin spice': {
+    [C.YELLOW]: 0.5,
+    [C.RED]: 0.3,
+    [C.BLACK]: 0.1,
+    [C.SHINY]: 0.1,
+    [F.SWEET]: 0.6,
+    [F.CINNAMON]: 0.7,
+    [F.EARTHY]: 0.4,
+    [F.SPICY]: 0.2,
+    [F.SMOKY]: 0.1,
+    [F.VANILLA]: 0.3,
+  },
+
+  'coco de nata': {
+    [C.WHITE]: 0.5,
+    [C.SHINY]: 0.5,
+    [T.FIRM_JELLY]: 1,
+    [F.SWEET]: 0.3,
+    [F.FAT]: 0.1,
+  },
+
+  'grass jelly': {
+    [C.BLACK]: 0.7,
+    [C.BLUE]: 0.2,
+    [C.SHINY]: 0.1,
+    [T.SOFT_JELLY]: 1,
+    [F.BITTER]: 0.4,
+    [F.EARTHY]: 0.3,
+    [F.SWEET]: 0.1,
+  },
+
+  'boba pearls': {
+    [C.BLACK]: 0.8,
+    [C.SHINY]: 0.2,
+    [T.CHEWY]: 1,
+    [F.SWEET]: 0.3,
+    [F.UMAMI]: 0.1,
+  },
+
+  'rolled oats': {
+    [C.YELLOW]: 0.5,
+    [C.WHITE]: 0.4,
+    [C.BLACK]: 0.1,
+    [T.CRUNCHY]: 1,
+    [F.SWEET]: 0.2,
+    [F.GRASSY]: 0.2,
+    [F.EARTHY]: 0.3,
+    [F.UMAMI]: 0.1,
+    [A.WHEAT]: 1,
   },
 };

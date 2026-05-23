@@ -41,6 +41,8 @@ export const SMOKY = 'FLAVOUR/SMOKY';
 // think: kiwifruit, jalapeno, capsicum,
 // matcha, olive oil, wheat grass
 export const GRASSY = 'FLAVOUR/GRASSY';
+// think: root vegetables, mushrooms, soil, dried leaves
+export const EARTHY = 'FLAVOUR/EARTHY';
 
 // We include some complex ingredients as atomic flavours
 // even though they aren't really so that it's easy to

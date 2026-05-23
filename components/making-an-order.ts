@@ -1,27 +1,11 @@
 import { Entity } from '../entities';
 import * as Component from '../lib/component';
+import type { Recipe } from '../utils/recipes';
 
 type CUSTOMER = 'CUSTOMER';
 type SERVER = 'SERVER';
 
 export type Role = CUSTOMER | SERVER;
-
-// placeholder
-export type Recipe = {
-  name: string;
-  ingredients: Record<string, number>;
-};
-
-export function lemonade() {
-  return {
-    name: 'lemonade',
-    ingredients: {
-      lemon: 50,
-      sugar: 50,
-      ice: 10,
-    },
-  };
-}
 
 export type T =
   | {
