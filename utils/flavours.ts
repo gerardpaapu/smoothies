@@ -24,12 +24,13 @@ export const ASTRINGENT = 'FLAVOUR/ASTRINGENT';
 // including olfactory and pain sensations
 // think: vinegar, wine, pickles
 export const ACETICACID = 'FLAVOUR/ACETICACID';
+// in some wine, a deep and clear SOUR
+export const TARTARICACID = 'FLAVOUR/TARTARICACID';
 // think: szechuan chili
 export const NUMBNESS = 'FLAVOUR/NUMBNESS';
 
 // Smells that we confuse with taste
 // ---------------------------------
-
 export const VANILLA = 'FLAVOUR/VANILLA';
 export const CINNAMON = 'FLAVOUR/CINNAMON';
 export const FLORAL = 'FLAVOUR/FLORAL';
@@ -53,3 +54,4 @@ export const EARTHY = 'FLAVOUR/EARTHY';
 // When these ingredients break down, they should always
 // include the corresponding flavour
 export const PINEAPPLE = 'FLAVOUR/PINEAPPLE';
+// TODO: chocolate, coffee, durian

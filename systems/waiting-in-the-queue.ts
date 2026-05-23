@@ -101,7 +101,6 @@ export function update() {
       // TODO: the component module can export constructors
       WaitingForAnOrder.add(customer, { role: 'CUSTOMER', order });
       MakingAnOrder.add(server, {
-        role: 'SERVER',
         order,
         forCustomer: customer,
         workLeft: 10,

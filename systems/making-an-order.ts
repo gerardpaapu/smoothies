@@ -9,41 +9,34 @@ export function initialise() {}
 
 export function update() {
   for (const entity of index.getEntities()) {
-    const server = MakingAnOrder.get(entity)!;
-    const name = PersonalDetails.get(entity)?.name;
-    switch (server.role) {
-      case 'SERVER':
-        {
-          if (server.workLeft === 9) {
-            console.log(
-              `${name} started making ${server.order.name} for ${PersonalDetails.get(server.forCustomer)?.name}`,
-            );
-          }
-          if (server.workLeft === 1) {
-            console.log(
-              `${name} is about to finish making ${server.order.name}`,
-            );
-          }
+    const making = MakingAnOrder.get(entity)!;
+    const details = PersonalDetails.get(entity)!;
+    const customerDetails = PersonalDetails.get(making.forCustomer)!;
 
-          if (server.workLeft === 0) {
-            console.log(
-              `${name} delivers ${server.order.name} to ${PersonalDetails.get(server.forCustomer)?.name}`,
-            );
-
-            // TODO: make a constructor for this
-            WaitingForAnOrder.add(entity, {
-              role: 'SERVER',
-              order: server.order,
-              forCustomer: server.forCustomer,
-            });
-            MakingAnOrder.remove(entity);
-          }
-          server.workLeft--;
-        }
-        break;
-      case 'CUSTOMER': {
-        // console.log(`${name} is waiting for their order`);
-      }
+    if (making.workLeft === 9) {
+      console.log(
+        `${details.name} started making ${making.order.name} for ${customerDetails.name}`,
+      );
     }
+
+    if (making.workLeft === 1) {
+      console.log(
+        `${details.name} is about to finish making ${making.order.name}`,
+      );
+    }
+
+    if (making.workLeft === 0) {
+      console.log(
+        `${details.name} delivers ${making.order.name} to ${customerDetails.name}`,
+      );
+
+      WaitingForAnOrder.add(
+        entity,
+        WaitingForAnOrder.server(making.order, making.forCustomer),
+      );
+      MakingAnOrder.remove(entity);
+    }
+
+    making.workLeft--;
   }
 }

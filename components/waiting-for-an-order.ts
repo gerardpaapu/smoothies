@@ -18,4 +18,11 @@ export type T =
       forCustomer: Entity;
     };
 
-export default Component.create<T>('Waiting for an order');
+export default {
+  ...Component.create<T>('Waiting for an order'),
+  server: (order: Recipe, forCustomer: Entity) => ({
+    role: 'SERVER' as const,
+    order,
+    forCustomer,
+  }),
+};
