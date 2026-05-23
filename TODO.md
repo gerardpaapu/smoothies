@@ -1,13 +1,13 @@
 - [ ] Report your $$$ every now and then
 - [ ] Making drinks should involve collecting ingredients and then mixing the drink
 - [ ] Ingredients should run out
-- [ ] Add boba pearls
+- [x] Add boba pearls
 - [ ] Some guy should show up and deliver more ingredients (for $$$)
 - [ ] Customers should choose something from a menu
 - [ ] Customers leave the queue if they get bored
-- [ ] Customers should pay for their drink
-- [ ] Customers should say whether they liked the drink or not
-- [ ] Customers shouldn't be in the "making an order" system, servers should move from "making an order" to "order pickup" (where the customer will be waiting)
-- [ ] Customers should have preferences
-- [ ] Flavours break down into their components
+- [x] Customers should pay for their drink
+- [x] Customers should say whether they liked the drink or not
+- [x] Customers shouldn't be in the "making an order" system, servers should move from "making an order" to "order pickup" (where the customer will be waiting)
+- [x] Customers should have preferences
+- [x] Flavours break down into their components
 - [ ] Day/night timer (closed at night, empty the queue)

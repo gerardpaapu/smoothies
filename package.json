@@ -1,8 +1,10 @@
 {
   "scripts": {
+    "start": "tsx main/index.ts",
     "test": "vitest"
   },
   "devDependencies": {
+    "tsx": "^4.22.3",
     "vitest": "^4.1.7"
   }
 }

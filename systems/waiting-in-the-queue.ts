@@ -2,6 +2,8 @@ import PersonalDetails from '../components/personal-details';
 import GlobalStats from '../components/global-stats.js';
 import Queue from '../components/queue';
 import MakingAnOrder from '../components/making-an-order.js';
+import WaitingForAnOrder from '../components/waiting-for-an-order.js';
+
 import buildIndex from '../lib/build-index.js';
 import * as Entities from '../entities/index.js';
 import { getName } from '../utils/names.js';
@@ -97,8 +99,7 @@ export function update() {
       console.log(`Your cash-on-hand is now $${GlobalStats.get(1)?.cash}`);
       // add the component for processing the order
       // TODO: the component module can export constructors
-      // TODO: customers should get a different component to wait for the order
-      MakingAnOrder.add(customer, { role: 'CUSTOMER', order });
+      WaitingForAnOrder.add(customer, { role: 'CUSTOMER', order });
       MakingAnOrder.add(server, {
         role: 'SERVER',
         order,

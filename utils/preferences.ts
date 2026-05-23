@@ -28,7 +28,7 @@ export const hate = (traits: Traits, scale = 1): Preference => ({
   certainty: 1, // TODO: no idea
 });
 
-type Experience = { name: string; traits: Traits };
+export type Experience = { name: string; traits: Traits };
 
 // an experience matches a preference, if the experience
 // includes all the named traits and to the degree

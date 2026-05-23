@@ -1,64 +1,48 @@
-import makingAnOrder from '../components/making-an-order';
-import personalDetails from '../components/personal-details';
-import queue from '../components/queue';
+import MakingAnOrder from '../components/making-an-order';
+import PersonalDetails from '../components/personal-details';
+import WaitingForAnOrder from '../components/waiting-for-an-order';
 import buildIndex from '../lib/build-index';
-import { getReview } from '../utils/preferences';
-import { prepare } from '../utils/prepare';
 
-const index = buildIndex([personalDetails, makingAnOrder]);
+const index = buildIndex([PersonalDetails, MakingAnOrder]);
 
 export function initialise() {}
 
 export function update() {
   for (const entity of index.getEntities()) {
-    const dude = makingAnOrder.get(entity)!;
-    const name = personalDetails.get(entity)?.name;
-    switch (dude.role) {
+    const server = MakingAnOrder.get(entity)!;
+    const name = PersonalDetails.get(entity)?.name;
+    switch (server.role) {
       case 'SERVER':
         {
-          if (dude.workLeft === 9) {
+          if (server.workLeft === 9) {
             console.log(
-              `${name} started making ${dude.order.name} for ${personalDetails.get(dude.forCustomer)?.name}`,
+              `${name} started making ${server.order.name} for ${PersonalDetails.get(server.forCustomer)?.name}`,
             );
           }
-          if (dude.workLeft === 1) {
-            console.log(`${name} is about to finish making ${dude.order.name}`);
-          }
-          if (dude.workLeft === 0) {
+          if (server.workLeft === 1) {
             console.log(
-              `${name} delivers ${dude.order.name} to ${personalDetails.get(dude.forCustomer)?.name}`,
+              `${name} is about to finish making ${server.order.name}`,
             );
-            makingAnOrder.remove(dude.forCustomer);
-            makingAnOrder.remove(entity);
+          }
 
-            const taster = personalDetails.get(dude.forCustomer)!.taster;
-            const review = getReview(taster, {
-              name: dude.order.name,
-              traits: prepare(dude.order),
+          if (server.workLeft === 0) {
+            console.log(
+              `${name} delivers ${server.order.name} to ${PersonalDetails.get(server.forCustomer)?.name}`,
+            );
+
+            // TODO: make a constructor for this
+            WaitingForAnOrder.add(entity, {
+              role: 'SERVER',
+              order: server.order,
+              forCustomer: server.forCustomer,
             });
-            const customerName = personalDetails.get(dude.forCustomer)?.name;
-
-            console.log(`review = ${review}`);
-            if (review > 0.5) {
-              console.log(`${customerName} enjoyed their ${dude.order.name}`);
-            } else if (review < -0.5) {
-              console.log(
-                `${customerName} didn't like their ${dude.order.name}`,
-              );
-            } else {
-              console.log(
-                `${customerName} thought their ${dude.order.name} was just okay`,
-              );
-            }
-
-            console.log(`${name} is ready to serve another customer`);
-            queue.add(entity, { role: 'SERVER' });
+            MakingAnOrder.remove(entity);
           }
-          dude.workLeft--;
+          server.workLeft--;
         }
         break;
       case 'CUSTOMER': {
-        console.log(`${name} is waiting for their order`);
+        // console.log(`${name} is waiting for their order`);
       }
     }
   }

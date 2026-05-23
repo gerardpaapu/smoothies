@@ -4,6 +4,7 @@ import * as A from './allergens';
 import * as T from './textures';
 import { HOT } from './temperature';
 import { Recipe, IngredientName } from './recipes';
+import { Experience } from './preferences';
 
 import Ingredients from './ingredients';
 
@@ -17,7 +18,7 @@ type Trait =
 
 type Traits = Record<Trait, number>;
 
-export function prepare(recipe: Recipe): Traits {
+export function prepare(recipe: Recipe): Experience {
   const result = Object.create(null) as Traits;
   for (const [_ingredient, amount] of Object.entries(recipe.ingredients)) {
     // break each ingredients into their traits
@@ -35,5 +36,5 @@ export function prepare(recipe: Recipe): Traits {
     }
   }
 
-  return result;
+  return { name: recipe.name, traits: result };
 }

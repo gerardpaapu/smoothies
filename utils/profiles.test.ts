@@ -19,12 +19,7 @@ describe(`peanutAllergy`, () => {
   const drink = prepare(peanutDelightRecipe);
 
   it(`doesn't like peanut drink`, () => {
-    expect(
-      getReview(Profile.peanutAllergy, {
-        name: 'Peanut Delight',
-        traits: drink,
-      }),
-    ).toBe(-100); // they flippin hate it bro
+    expect(getReview(Profile.peanutAllergy, drink)).toBe(-100); // they flippin hate it bro
   });
 });
 
@@ -40,9 +35,7 @@ describe(`textureHater`, () => {
       },
     };
     const drink = prepare(recipe);
-    expect(
-      getReview(Profile.textureHater, { name: 'Bubble Tea', traits: drink }),
-    ).toBeLessThan(0);
+    expect(getReview(Profile.textureHater, drink)).toBeLessThan(0);
   });
 
   it(`is neutral on a texture-free smoothie`, () => {
@@ -56,12 +49,7 @@ describe(`textureHater`, () => {
       },
     };
     const drink = prepare(recipe);
-    expect(
-      getReview(Profile.textureHater, {
-        name: 'Banana Smoothie',
-        traits: drink,
-      }),
-    ).toBe(0);
+    expect(getReview(Profile.textureHater, drink)).toBe(0);
   });
 });
 
@@ -77,9 +65,7 @@ describe(`sweetSourCold`, () => {
       },
     };
     const drink = prepare(recipe);
-    expect(
-      getReview(Profile.sweetSourCold, { name: 'Lemonade', traits: drink }),
-    ).toBeGreaterThan(0);
+    expect(getReview(Profile.sweetSourCold, drink)).toBeGreaterThan(0);
   });
 });
 
@@ -95,12 +81,7 @@ describe(`pumpkinSpiceGirly`, () => {
       },
     };
     const drink = prepare(recipe);
-    expect(
-      getReview(Profile.pumpkinSpiceGirly, {
-        name: 'Cold Brew Pumpkin Spice',
-        traits: drink,
-      }),
-    ).toBe(0);
+    expect(getReview(Profile.pumpkinSpiceGirly, drink)).toBe(0);
   });
 
   it(`loves a hot pumpkin spice drink`, () => {
@@ -114,11 +95,6 @@ describe(`pumpkinSpiceGirly`, () => {
     };
     // manually add HOT since no hot ingredient exists yet
     const drink = { ...prepare(recipe), [HOT]: 1 };
-    expect(
-      getReview(Profile.pumpkinSpiceGirly, {
-        name: 'Pumpkin Spice Latte',
-        traits: drink,
-      }),
-    ).toBeGreaterThan(1);
+    expect(getReview(Profile.pumpkinSpiceGirly, drink)).toBeGreaterThan(1);
   });
 });
