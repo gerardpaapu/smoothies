@@ -55,7 +55,7 @@ export const pumpkinSpiceGirly: Taster = [
       [F.SPICY]: 0.2,
       [F.SMOKY]: 0.1,
       [F.VANILLA]: 0.3,
-      [HOT]: 1,
+      [HOT]: 10,
     },
     2,
   ),

@@ -1,10 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { prepare } from './prepare';
 import { type Recipe } from './recipes';
-import * as Ig from './ingredients';
 import * as Profile from './profiles';
 import { getReview } from './preferences';
-import { HOT } from './temperature';
 
 describe(`peanutAllergy`, () => {
   const peanutDelightRecipe: Recipe = {
@@ -70,18 +68,32 @@ describe(`sweetSourCold`, () => {
 });
 
 describe(`pumpkinSpiceGirly`, () => {
-  it(`does not match a room-temperature pumpkin spice drink`, () => {
+  it(`a room temperature pumpkin spice drink is *okay*`, () => {
+    const recipe: Recipe = {
+      name: 'Cold Brew Pumpkin Spice',
+      price: 5,
+      ingredients: {
+        'pumpkin spice': 20,
+        milk: 20,
+      },
+    };
+    const drink = prepare(recipe);
+    expect(getReview(Profile.pumpkinSpiceGirly, drink)).toBeLessThan(0.5);
+  });
+
+  it(`a very cold pumpkin spice drink is bad`, () => {
     // no HOT trait in the drink, so the preference never matches
     const recipe: Recipe = {
       name: 'Cold Brew Pumpkin Spice',
       price: 5,
       ingredients: {
         'pumpkin spice': 20,
-        milk: 100,
+        milk: 20,
+        ice: 100,
       },
     };
     const drink = prepare(recipe);
-    expect(getReview(Profile.pumpkinSpiceGirly, drink)).toBe(0);
+    expect(getReview(Profile.pumpkinSpiceGirly, drink)).toBeLessThan(0);
   });
 
   it(`loves a hot pumpkin spice drink`, () => {
@@ -90,11 +102,10 @@ describe(`pumpkinSpiceGirly`, () => {
       price: 6,
       ingredients: {
         'pumpkin spice': 20,
-        milk: 100,
+        'hot milk': 20,
       },
     };
-    // manually add HOT since no hot ingredient exists yet
-    const drink = { ...prepare(recipe), [HOT]: 1 };
+    const drink = prepare(recipe);
     expect(getReview(Profile.pumpkinSpiceGirly, drink)).toBeGreaterThan(1);
   });
 });

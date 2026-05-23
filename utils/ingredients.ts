@@ -3,6 +3,71 @@ import * as C from './colours';
 import * as A from './allergens';
 import * as T from './textures';
 import { HOT } from './temperature';
+import { type Traits } from './traits';
+
+const milks = {
+  // by milk simplicitor I mean cow milk, from a cow
+  milk: {
+    [C.WHITE]: 0.8,
+    [C.SHINY]: 0.2,
+    [F.FAT]: 0.5,
+    [F.SWEET]: 0.2,
+    [F.CALCIUM]: 0.2,
+    [F.UMAMI]: 0.1,
+    [A.DAIRY]: 1,
+  },
+
+  'oat milk': {
+    [C.WHITE]: 0.6,
+    [C.YELLOW]: 0.3,
+    [C.SHINY]: 0.1,
+    [F.SWEET]: 0.4,
+    [F.GRASSY]: 0.3,
+    [F.FAT]: 0.2,
+    [F.UMAMI]: 0.1,
+  },
+
+  'soy milk': {
+    [C.WHITE]: 0.6,
+    [C.YELLOW]: 0.3,
+    [C.SHINY]: 0.1,
+    [F.SWEET]: 0.4,
+    [F.GRASSY]: 0.3,
+    [F.FAT]: 0.2,
+    [F.UMAMI]: 0.1,
+    [A.SOY]: 1,
+  },
+
+  'coconut milk': {
+    [C.WHITE]: 0.7,
+    [C.SHINY]: 0.3,
+    [F.FAT]: 0.7,
+    [F.SWEET]: 0.3,
+    [F.VANILLA]: 0.2,
+  },
+
+  'almond milk': {
+    [C.WHITE]: 0.7,
+    [C.YELLOW]: 0.2,
+    [C.SHINY]: 0.1,
+    [F.SWEET]: 0.3,
+    [F.FAT]: 0.3,
+    [F.BITTER]: 0.2,
+    [F.UMAMI]: 0.1,
+    [F.ASTRINGENT]: 0.1,
+  },
+};
+
+const hotMilks = Object.create(null) as {
+  [K in keyof typeof milks as `hot ${K}`]: Traits;
+};
+for (const [_key, milk] of Object.entries(milks)) {
+  const key = _key as keyof typeof milks;
+  hotMilks[`hot ${key}`] = {
+    ...milk,
+    [HOT]: 1,
+  };
+}
 
 export default {
   'peanut butter': {
@@ -204,57 +269,6 @@ export default {
     [F.SMOKY]: 0.2,
   },
 
-  // by milk simplicitor I mean cow milk, from a cow
-  milk: {
-    [C.WHITE]: 0.8,
-    [C.SHINY]: 0.2,
-    [F.FAT]: 0.5,
-    [F.SWEET]: 0.2,
-    [F.CALCIUM]: 0.2,
-    [F.UMAMI]: 0.1,
-    [A.DAIRY]: 1,
-  },
-
-  'oat milk': {
-    [C.WHITE]: 0.6,
-    [C.YELLOW]: 0.3,
-    [C.SHINY]: 0.1,
-    [F.SWEET]: 0.4,
-    [F.GRASSY]: 0.3,
-    [F.FAT]: 0.2,
-    [F.UMAMI]: 0.1,
-  },
-
-  'soy milk': {
-    [C.WHITE]: 0.6,
-    [C.YELLOW]: 0.3,
-    [C.SHINY]: 0.1,
-    [F.SWEET]: 0.4,
-    [F.GRASSY]: 0.3,
-    [F.FAT]: 0.2,
-    [F.UMAMI]: 0.1,
-    [A.SOY]: 1,
-  },
-
-  'coconut milk': {
-    [C.WHITE]: 0.7,
-    [C.SHINY]: 0.3,
-    [F.FAT]: 0.7,
-    [F.SWEET]: 0.3,
-    [F.VANILLA]: 0.2,
-  },
-
-  'almond milk': {
-    [C.WHITE]: 0.7,
-    [C.YELLOW]: 0.2,
-    [C.SHINY]: 0.1,
-    [F.SWEET]: 0.3,
-    [F.FAT]: 0.3,
-    [F.BITTER]: 0.2,
-    [F.UMAMI]: 0.1,
-    [F.ASTRINGENT]: 0.1,
-  },
-
   'pumpkin spice': {
     [C.YELLOW]: 0.5,
     [C.RED]: 0.3,
@@ -305,4 +319,7 @@ export default {
     [F.UMAMI]: 0.1,
     [A.WHEAT]: 1,
   },
+
+  ...milks,
+  ...hotMilks,
 };
