@@ -10,7 +10,19 @@ import { getName } from '../utils/names.js';
 import { randomTaster } from '../utils/profiles.js';
 
 const index = buildIndex([PersonalDetails, Queue]);
-
+// TODO: The customers should be numbered as they join the queue
+// TODO: The customers should be re-numbered as others leave the queue
+// TODO: The customers should leave if their excitement gets low enough (bored)
+// TODO: The 0th customer (head of the queue) should have the HeadOfQueue as their goal
+// TODO: The n+1th customer should have the spot behind the nth customer as their goal
+// TODO: The 0th Server should have the TakingAnOrder as their goal
+// TODO: The n+1th server can stand anywhere I guess, they should just fart around
+//       (they should be cleaning, or on their phone, or smoking if they're cool)
+// TODO: The order can only be taken if the 0th customer is standing at their goal and
+//       the 0th server is standing at their goal
+// TODO: If there are no servers waiting to take an order, the customers in queue
+//       all get angry
+// TODO: If the day ends while a customer is waiting, they will get angry
 const NUMBER_OF_CUSTOMERS = 12;
 const NUMBER_OF_SERVERS = 3;
 
@@ -101,8 +113,7 @@ export function update() {
       // TODO: the component module can export constructors
       WaitingForAnOrder.add(customer, { role: 'CUSTOMER', order });
       MakingAnOrder.add(server, {
-        order,
-        forCustomer: customer,
+        order: { ...order, customer },
         workLeft: 10,
       });
     }

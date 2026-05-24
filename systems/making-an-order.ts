@@ -11,7 +11,7 @@ export function update() {
   for (const entity of index.getEntities()) {
     const making = MakingAnOrder.get(entity)!;
     const details = PersonalDetails.get(entity)!;
-    const customerDetails = PersonalDetails.get(making.forCustomer)!;
+    const customerDetails = PersonalDetails.get(making.order.customer)!;
 
     if (making.workLeft === 9) {
       console.log(
@@ -30,10 +30,7 @@ export function update() {
         `${details.name} delivers ${making.order.name} to ${customerDetails.name}`,
       );
 
-      WaitingForAnOrder.add(
-        entity,
-        WaitingForAnOrder.server(making.order, making.forCustomer),
-      );
+      WaitingForAnOrder.add(entity, WaitingForAnOrder.server(making.order));
       MakingAnOrder.remove(entity);
     }
 

@@ -14,15 +14,13 @@ export type T =
     }
   | {
       role: SERVER;
-      order: Recipe;
-      forCustomer: Entity;
+      order: Recipe & { customer: Entity };
     };
 
 export default {
   ...Component.create<T>('Waiting for an order'),
-  server: (order: Recipe, forCustomer: Entity) => ({
+  server: (order: Recipe & { customer: Entity }) => ({
     role: 'SERVER' as const,
     order,
-    forCustomer,
   }),
 };

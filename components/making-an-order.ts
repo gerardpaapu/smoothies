@@ -3,8 +3,7 @@ import * as Component from '../lib/component';
 import type { Recipe } from '../utils/recipes';
 
 export type T = {
-  order: Recipe;
-  forCustomer: Entity;
+  order: Recipe & { customer: Entity };
   workLeft: number;
 };
 

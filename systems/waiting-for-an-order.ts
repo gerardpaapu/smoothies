@@ -10,6 +10,9 @@
 // If a customer is waiting too long (measured by their mood),
 // they'll just leave. They will probably post negative feedback
 //
+// After *close* you can still deliver orders for N-minutes, after
+// that timeout, the customers will leave angry.
+//
 // When a drink is successfully delivered, we'll generate a review
 // for the drink based on the customer receiving it and they may post
 // feedback
@@ -43,7 +46,7 @@ export function update() {
 
   for (const [server, waiting] of servers) {
     // look for the customer
-    const customer = waiting.forCustomer;
+    const customer = waiting.order.customer;
     if (WaitingForAnOrder.get(customer) == null) {
       // they've left
       continue;

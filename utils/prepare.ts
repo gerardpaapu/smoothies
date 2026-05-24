@@ -18,6 +18,7 @@ export function prepare(recipe: Recipe): Experience {
     }
   }
 
+  // Every drink should have a default temperature
   if (!(HOT in result)) {
     result[HOT] = 0;
   }

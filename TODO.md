@@ -11,3 +11,4 @@
 - [x] Customers should have preferences
 - [x] Flavours break down into their components
 - [ ] Day/night timer (closed at night, empty the queue)
+- [ ] Add blueprints for some composites (e.g. customer)

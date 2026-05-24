@@ -5,6 +5,8 @@ import Serving from '../components/serving';
 import MakingAnOrder from '../components/making-an-order';
 import WaitingForAnOrder from '../components/waiting-for-an-order';
 import PersonalDetails from '../components/personal-details';
+import Location from '../components/location';
+import Goal from '../components/goal';
 
 // do something with them...
 export default [
@@ -14,4 +16,6 @@ export default [
   PersonalDetails,
   MakingAnOrder,
   WaitingForAnOrder,
+  Location,
+  Goal,
 ];
