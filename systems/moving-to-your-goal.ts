@@ -17,6 +17,8 @@ export function update() {
       continue;
     }
 
+    // TODO: add some random elements to make
+    // the walk look more natural
     if (goal.x > location.x) {
       location.d = Direction.RIGHT;
       location.x++;

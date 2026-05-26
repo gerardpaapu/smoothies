@@ -1,3 +1,6 @@
+
+- [ ] Rename index to query?
+- [ ] Split components that used tagged unions into two components and the system can just do two queries
 - [ ] Report your $$$ every now and then
 - [ ] Making drinks should involve collecting ingredients and then mixing the drink
 - [ ] Ingredients should run out
@@ -12,3 +15,4 @@
 - [x] Flavours break down into their components
 - [ ] Day/night timer (closed at night, empty the queue)
 - [ ] Add blueprints for some composites (e.g. customer)
+- [ ] 

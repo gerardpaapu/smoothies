@@ -17,43 +17,53 @@
 // for the drink based on the customer receiving it and they may post
 // feedback
 import WaitingForAnOrder from '../components/waiting-for-an-order';
+import DeliveringAnOrder from '../components/delivering-an-order';
 import Queue from '../components/queue';
 import PersonalDetails from '../components/personal-details';
+import Location from '../components/location';
+import Goal from '../components/goal';
 
 import buildIndex from '../lib/build-index';
 import { prepare } from '../utils/prepare';
 import { getReview } from '../utils/preferences';
 
-const index = buildIndex([WaitingForAnOrder, PersonalDetails]);
+const customers = buildIndex([WaitingForAnOrder, Location, PersonalDetails]);
+const servers = buildIndex([
+  DeliveringAnOrder,
+  Location,
+  Goal,
+  PersonalDetails,
+]);
 
 export function initialise() {}
-
+// TODO: When a customer's order is ready, the server should take it to them
+//       i.e. they should set that customer's location as their goal
+// TODO: When a customer has their drink, it should affect their mood
+// TODO: When a customer has their drink we should hand off to a system
+//       where they go home or post a review on social media
+// TODO: ... when two people interact, should we move both of their moods
+//       closer to the mean? that could be fun
 export function update() {
-  const servers = [];
-  const customers = [];
-
-  for (const entity of index.getEntities()) {
-    const waiting = WaitingForAnOrder.get(entity)!;
-    switch (waiting.role) {
-      case 'CUSTOMER':
-        customers.push([entity, waiting] as const);
-        break;
-      case 'SERVER':
-        servers.push([entity, waiting] as const);
-        break;
-    }
+  for (const customer of customers.getEntities()) {
+    const personalDetails = PersonalDetails.get(customer)!;
+    console.log(`${personalDetails.name} is waiting for their drink`);
   }
 
-  for (const [server, waiting] of servers) {
+  for (const server of servers.getEntities()) {
+    const delivering = DeliveringAnOrder.get(server)!;
     // look for the customer
-    const customer = waiting.order.customer;
+    const customer = delivering.order.customer;
     if (WaitingForAnOrder.get(customer) == null) {
       // they've left
       continue;
     }
 
+    // check if they're close enough to the customer
+    // update the goal to the customer's location
+    //
     let customerDetails = PersonalDetails.get(customer)!;
     let serverDetails = PersonalDetails.get(server)!;
+
     WaitingForAnOrder.remove(customer);
 
     console.log(`order delivered to ${customerDetails.name}`);
@@ -62,16 +72,16 @@ export function update() {
     WaitingForAnOrder.remove(server);
     Queue.add(server, { role: 'SERVER' });
 
-    const review = getReview(customerDetails.taster, prepare(waiting.order));
+    const review = getReview(customerDetails.taster, prepare(delivering.order));
 
     const customerName = customerDetails.name;
     if (review > 0.5) {
-      console.log(`${customerName} enjoyed their ${waiting.order.name}`);
+      console.log(`${customerName} enjoyed their ${delivering.order.name}`);
     } else if (review < -0.5) {
-      console.log(`${customerName} didn't like their ${waiting.order.name}`);
+      console.log(`${customerName} didn't like their ${delivering.order.name}`);
     } else {
       console.log(
-        `${customerName} thought their ${waiting.order.name} was just okay`,
+        `${customerName} thought their ${delivering.order.name} was just okay`,
       );
     }
   }

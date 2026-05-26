@@ -111,11 +111,9 @@ export function update() {
       console.log(`Your cash-on-hand is now $${GlobalStats.get(1)?.cash}`);
       // add the component for processing the order
       // TODO: the component module can export constructors
-      WaitingForAnOrder.add(customer, { role: 'CUSTOMER', order });
-      MakingAnOrder.add(server, {
-        order: { ...order, customer },
-        workLeft: 10,
-      });
+      WaitingForAnOrder.add(customer, { order });
+      // TODO: should this just be like ... addServer?
+      MakingAnOrder.add(server, MakingAnOrder.server({ ...order, customer }));
     }
   }
 }
