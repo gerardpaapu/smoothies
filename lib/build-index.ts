@@ -12,6 +12,10 @@ export default function buildIndex(components: Component<any>[]) {
         return { idx, items, name: c.name } as Cursor;
       });
 
+      if (cursors.length === 0) {
+        return [];
+      }
+
       const [first, ...rest] = cursors;
       const join = [];
       outer: for (let i = 0; i < first.items.length; i++) {

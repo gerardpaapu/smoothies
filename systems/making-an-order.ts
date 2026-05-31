@@ -1,18 +1,69 @@
-import MakingAnOrder from '../components/making-an-order';
+import MakingAnOrder, {
+  T as MakingAnOrderT,
+} from '../components/making-an-order';
 import PersonalDetails from '../components/personal-details';
-import Location from '../components/location';
+import Location from '../components/position';
 import IngredientsBucket from '../components/ingredients-bucket';
 import Blender from '../components/blender';
 import Goal from '../components/goal';
 import WaitingForAnOrder from '../components/waiting-for-an-order';
 import deliveringAnOrder from '../components/delivering-an-order';
 import buildIndex from '../lib/build-index';
+import ingredients from '../utils/ingredients';
+import { Direction } from '../utils/location';
+import * as Entities from '../entities';
+import Position from '../components/position';
+import { IngredientName } from '../utils/recipes';
 
-const workersQ = buildIndex([Location, Goal, PersonalDetails, MakingAnOrder]);
+const workersQ = buildIndex([Location, PersonalDetails, MakingAnOrder]);
 const bucketsQ = buildIndex([Location, IngredientsBucket]);
 const blendersQ = buildIndex([Location, Blender]);
 
-export function initialise() {}
+export function initialise() {
+  const neededIngredients: IngredientName[] = [
+    'banana',
+    'coconut milk',
+    'honey',
+    'ice',
+    'lemon',
+    'mango',
+    'mint',
+    'oat milk',
+    'simple syrup',
+    'spinach',
+    'yogurt',
+    'pineapple',
+    'coconut milk',
+  ];
+  const start = 100;
+  const width = 16;
+
+  // we need an ingredients bucket for each of these guys
+  for (let i = 0; i < neededIngredients.length; i++) {
+    const ingredient = neededIngredients[i];
+    const x = start + width * i;
+    const y = 100;
+    const d = Direction.DOWN;
+
+    const entity = Entities.create();
+    IngredientsBucket.add(entity, {
+      ingredient,
+      amount: Infinity,
+      usedBy: -1,
+    });
+    Position.add(entity, { x, y, d });
+  }
+
+  {
+    const entity = Entities.create();
+    Blender.add(entity, { usedBy: -1 });
+    Position.add(entity, {
+      x: start - 30,
+      y: 100,
+      d: Direction.DOWN,
+    });
+  }
+}
 
 // TODO: add cartons of ingredients at locations
 // TODO: add location and goal
@@ -32,26 +83,27 @@ export function initialise() {}
 
 export function update() {
   // put the buckets in the map according to their ingredients
-  let buckets = new Map();
-
-  for (const entity of bucketsQ.getEntities()) {
-    const bucket = IngredientsBucket.get(entity)!;
-    const location = Location.get(entity)!;
-    // could have multiple buckets with the same ingredients
-    buckets.set(bucket.ingredient, { entity, bucket, location });
-  }
-
-  let blenders = [];
-  for (const entity of blendersQ.getEntities()) {
-    const location = Location.get(entity)!;
-    blenders.push({ entity, location });
-  }
-
   for (const entity of workersQ.getEntities()) {
     const making = MakingAnOrder.get(entity)!;
 
-    const serverDetails = PersonalDetails.get(entity);
+    const serverDetails = PersonalDetails.get(entity)!;
     const customerDetails = PersonalDetails.get(making.order.customer)!;
+    console.log(
+      `${serverDetails.name} is working on a ${making.order.name} for ${customerDetails.name}`,
+    );
+    // We're done
+
+    if (making.mixed >= 10) {
+      console.log(
+        `${serverDetails?.name} is delivering a drink for ${customerDetails.name}`,
+      );
+
+      deliveringAnOrder.add(entity, { order: making.order });
+      MakingAnOrder.remove(entity);
+      continue;
+    }
+
+    // I think it's kind of clear that this should be a separate component right?
 
     // if we're using a bucket, keep using it until we have enough of the ingredient
     let bucket;
@@ -61,12 +113,14 @@ export function update() {
       if (
         making.collected[ingredient]! >= making.order.ingredients[ingredient]!
       ) {
+        console.log(`${serverDetails!.name} finished collecting ${ingredient}`);
         making.using = -1;
+        bucket.usedBy = -1;
         continue;
       }
       console.log(`${serverDetails!.name} is collecting ${ingredient}`);
       making.collected[ingredient] ??= 0;
-      making.collected[ingredient]++;
+      making.collected[ingredient] += 4;
       continue;
     }
 
@@ -75,7 +129,11 @@ export function update() {
     if (making.using !== -1 && (blender = Blender.get(making.using))) {
       if (making.mixed < 10) {
         console.log(`${serverDetails!.name} is using the blender`);
-        making.mixed++;
+        making.mixed += 2;
+        // this is wonky as
+        if (making.mixed >= 10) {
+          blender.usedBy = -1;
+        }
         continue;
       }
 
@@ -83,15 +141,16 @@ export function update() {
       continue;
     }
 
-    // if all the ingredients are collected set the blender as your goal
+    // what's the next ingredient we should collect
+    let seeking = nextNeededIngredient(making);
 
-    let seeking = null;
-    // TODO: could just keep this on `making`
-    for (let k in making.order.ingredients) {
-      if (!(k in making.collected)) {
-        seeking = k;
-      }
+    // if all the ingredients are collected set the blender as your goal
+    if (seeking == null) {
+      findClosestBlender(entity);
+      continue;
     }
+
+    findClosestBucketOf(entity, seeking);
 
     // find all the buckets of this ingredient that are not empty
     // if there's one or more that isn't being used, choose the closest
@@ -100,9 +159,107 @@ export function update() {
     // otherwise we can't make the drink, go to deliver the bad news
 
     // if we're already standing at our goal, start using the machine
-
-    // if the order is done go deliver it
-    deliveringAnOrder.add(entity, { order: making.order });
-    MakingAnOrder.remove(entity);
   }
+}
+function findClosestBucketOf(entity: number, ingredient: IngredientName) {
+  let closest = null;
+  let bucket = null;
+  let distance = Infinity;
+
+  const position = Position.get(entity)!;
+
+  // TODO: these queries should be memoized
+  for (const entity of bucketsQ.getEntities()) {
+    const bucketData = IngredientsBucket.get(entity)!;
+    if (bucketData.ingredient !== ingredient) {
+      continue;
+    }
+
+    const bucketPosition = Position.get(entity)!;
+    let dx = position.x - bucketPosition.x;
+    let dy = position.y - bucketPosition.y;
+    let d2 = dx * dx + dy * dy;
+
+    if (d2 < distance) {
+      closest = bucketPosition;
+      bucket = entity;
+      distance = d2;
+    }
+  }
+
+  if (!closest || !bucket) {
+    // give up
+    console.log(`couldn't find a ${ingredients} bucket`);
+    return;
+  }
+
+  const b = IngredientsBucket.get(bucket)!;
+  if (closest.x == position.x && closest.y == position.y) {
+    // we're here, we can start using it
+    if (b.usedBy === -1) {
+      const server = MakingAnOrder.get(entity)!;
+      b.usedBy = entity;
+      server.using = bucket;
+      return;
+    }
+    // else I guess we just wait here?
+    console.log(`The ${ingredient} bucket is being used, we have to wait`);
+  } else {
+    console.log(`Walking to the ${ingredient} bucket`);
+
+    Goal.add(entity, { ...closest });
+  }
+}
+
+function findClosestBlender(entity: number) {
+  let closest = null;
+  let blender = null;
+  let distance = Infinity;
+
+  const position = Position.get(entity)!;
+
+  for (const entity of blendersQ.getEntities()) {
+    const blenderPosition = Position.get(entity)!;
+    let dx = position.x - blenderPosition.x;
+    let dy = position.y - blenderPosition.y;
+    let d2 = dx * dx + dy * dy;
+
+    if (d2 < distance) {
+      closest = blenderPosition;
+      blender = entity;
+      distance = d2;
+    }
+  }
+  if (!closest || !blender) {
+    // give up
+    console.log(`couldn't find a blender :(`);
+    return;
+  }
+
+  const b = Blender.get(blender)!;
+  if (closest.x == position.x && closest.y == position.y) {
+    // we're here, we can start using it
+    if (b.usedBy === -1) {
+      const server = MakingAnOrder.get(entity)!;
+      b.usedBy = entity;
+      server.using = blender;
+      return;
+    }
+    // else I guess we just wait here?
+    console.log(`The blender is being used, we have to wait`);
+  } else {
+    console.log(`Walking to the blender`);
+    Goal.add(entity, { ...closest });
+  }
+}
+
+function nextNeededIngredient(making: MakingAnOrderT) {
+  let seeking: IngredientName | null = null;
+  for (let k in making.order.ingredients) {
+    if (!(k in making.collected)) {
+      seeking = k as IngredientName;
+      break;
+    }
+  }
+  return seeking;
 }

@@ -5,4 +5,6 @@ export type T = {
   order: Order;
 };
 
-export default Component.create<T>('Delivering an order');
+const DeliveringAnOrder = Component.create<T>('Delivering an order');
+
+export default DeliveringAnOrder;

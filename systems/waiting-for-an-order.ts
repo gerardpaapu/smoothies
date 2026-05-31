@@ -20,12 +20,13 @@ import WaitingForAnOrder from '../components/waiting-for-an-order';
 import DeliveringAnOrder from '../components/delivering-an-order';
 import Queue from '../components/queue';
 import PersonalDetails from '../components/personal-details';
-import Location from '../components/location';
+import Location from '../components/position';
 import Goal from '../components/goal';
 
 import buildIndex from '../lib/build-index';
 import { prepare } from '../utils/prepare';
 import { getReview } from '../utils/preferences';
+import TakingOrders from '../components/taking-orders';
 
 const customers = buildIndex([WaitingForAnOrder, Location, PersonalDetails]);
 const servers = buildIndex([
@@ -70,7 +71,7 @@ export function update() {
 
     console.log(`${serverDetails.name} going back to take more orders`);
     WaitingForAnOrder.remove(server);
-    Queue.add(server, { role: 'SERVER' });
+    TakingOrders.add(server, {});
 
     const review = getReview(customerDetails.taster, prepare(delivering.order));
 

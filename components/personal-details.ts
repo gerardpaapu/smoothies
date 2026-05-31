@@ -14,4 +14,5 @@ export type T = {
   taster: Taster;
 };
 
-export default Component.create<T>('PersonalDetails');
+const PersonalDetails = Component.create<T>('PersonalDetails');
+export default PersonalDetails;

@@ -5,4 +5,5 @@ export type T = {
   usedBy: Entity;
 };
 
-export default Component.create<T>('Blender');
+const Blender = Component.create<T>('Blender');
+export default Blender;

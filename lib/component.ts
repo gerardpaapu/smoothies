@@ -19,6 +19,10 @@ function insert(entity: Entity, arr: Entity[]) {
   // arr is sorted so that the largest entities are
   // at the end
   for (let i = arr.length - 1; i >= 0; i--) {
+    if (arr[i] === entity) {
+      return;
+    }
+
     if (arr[i] < entity) {
       arr.splice(i + 1, 0, entity);
       return;

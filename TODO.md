@@ -1,6 +1,9 @@
 
 - [ ] Rename index to query?
-- [ ] Split components that used tagged unions into two components and the system can just do two queries
+- [ ] Export the queries as a function from the system
+- [ ] The components can have a "dirty" flag to avoid rework
+- [ ] The queries can also use that flag
+- [x] Split components that used tagged unions into two components and the system can just do two queries
 - [ ] Report your $$$ every now and then
 - [ ] Making drinks should involve collecting ingredients and then mixing the drink
 - [ ] Ingredients should run out

@@ -1,6 +1,11 @@
 export type Location = {
   x: number;
   y: number;
+};
+
+export type Position = {
+  x: number;
+  y: number;
   d: Direction;
 };
 

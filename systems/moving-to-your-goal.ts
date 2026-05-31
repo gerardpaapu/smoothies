@@ -1,16 +1,18 @@
-import Location from '../components/location';
+import Position from '../components/position';
 import Goal from '../components/goal';
 
 import buildIndex from '../lib/build-index';
 import { Direction } from '../utils/location';
 
-const index = buildIndex([Location, Goal]);
+const index = buildIndex([Position, Goal]);
 
 export function initialise() {}
 
+const MOVE_SPEED = 20;
+
 export function update() {
   for (const entity of index.getEntities()) {
-    const location = Location.get(entity);
+    const location = Position.get(entity)!;
     const goal = Goal.get(entity);
 
     if (!(location && goal)) {
@@ -21,25 +23,25 @@ export function update() {
     // the walk look more natural
     if (goal.x > location.x) {
       location.d = Direction.RIGHT;
-      location.x++;
+      location.x = Math.min(location.x + MOVE_SPEED, goal.x);
       continue;
     }
 
     if (goal.y > location.y) {
       location.d = Direction.DOWN;
-      location.y++;
+      location.y = Math.min(location.y + MOVE_SPEED, goal.y);
       continue;
     }
 
     if (goal.x < location.x) {
       location.d = Direction.LEFT;
-      location.x--;
+      location.x = Math.max(location.x - MOVE_SPEED, goal.x);
       continue;
     }
 
     if (goal.y < location.y) {
       location.d = Direction.UP;
-      location.y--;
+      location.y = Math.max(location.y - MOVE_SPEED, goal.y);
       continue;
     }
 

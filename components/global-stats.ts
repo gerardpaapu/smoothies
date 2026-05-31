@@ -7,5 +7,5 @@ export type T = {
   cash: number;
   menu: Recipe[];
 };
-
-export default Component.create<T>('GlobalStats');
+const GlobalStats = Component.create<T>('GlobalStats');
+export default GlobalStats;

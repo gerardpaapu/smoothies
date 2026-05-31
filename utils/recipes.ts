@@ -61,3 +61,19 @@ export function strawberryYogurtBlend(): Recipe {
     },
   };
 }
+
+const neededIngredients: IngredientName[] = [
+  'banana',
+  'coconut milk',
+  'honey',
+  'ice',
+  'lemon',
+  'mango',
+  'mint',
+  'oat milk',
+  'simple syrup',
+  'spinach',
+  'yogurt',
+  'pineapple',
+  'coconut milk',
+];

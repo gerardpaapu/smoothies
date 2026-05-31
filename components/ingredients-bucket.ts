@@ -8,4 +8,5 @@ type T = {
   usedBy: Entity;
 };
 
-export default Component.create<T>('Ingredients bucket');
+const IngredientsBucket = Component.create<T>('Ingredients bucket');
+export default IngredientsBucket;
