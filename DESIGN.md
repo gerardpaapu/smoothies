@@ -38,4 +38,4 @@ During an update loop, the `update()` function is called for each system in some
 
 When entities engage in a behaviour together, that behaviour should be represented in a single system even if that behaviour is assymetrical.
 
-e.g. if bullets collide with enemies, both the bullets and the enemies should share a component.
+This can be because they share a system, 

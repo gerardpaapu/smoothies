@@ -1,4 +1,4 @@
-import ingredients from './ingredients';
+import ingredients from './ingredients.js';
 
 export type IngredientName = keyof typeof ingredients;
 export type Ingredients = Partial<Record<IngredientName, number>>;
@@ -62,3 +62,18 @@ export function strawberryYogurtBlend(): Recipe {
   };
 }
 
+const neededIngredients: IngredientName[] = [
+  'banana',
+  'coconut milk',
+  'honey',
+  'ice',
+  'lemon',
+  'mango',
+  'mint',
+  'oat milk',
+  'simple syrup',
+  'spinach',
+  'yogurt',
+  'pineapple',
+  'coconut milk',
+];

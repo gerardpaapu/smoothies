@@ -1,3 +1,4 @@
 # Smoothies
 
-Smoothies is a lemonade stand style game
+Smoothies is a lemonade stand style game.
+

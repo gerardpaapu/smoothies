@@ -1,0 +1,23 @@
+// Moods are away from neutral, so they all fade over time
+// at roughly the same rate.
+//
+// e.g. instead of boredom going up, excitement goes down
+// unless something happens to make them excited
+import personalDetails from '../components/personal-details.js';
+
+import type { QueryResults } from '../lib/system.js';
+
+export function defineQueries() {
+  return { persons: [personalDetails] };
+}
+
+export function initialise() {}
+
+export function update({ persons }: QueryResults<typeof defineQueries>) {
+  for (const entity of persons) {
+    const { mood } = personalDetails.get(entity)!;
+    for (const k in mood) {
+      mood[k as keyof typeof mood] *= 0.99;
+    }
+  }
+}

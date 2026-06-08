@@ -1,13 +1,17 @@
 {
   "scripts": {
-    "start": "tsx main/index.ts",
+    "start": "tsx src/main/index.ts",
     "test": "vitest"
   },
   "devDependencies": {
+    "prettier": "^3.8.3",
     "tsx": "^4.22.3",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.14",
     "vitest": "^4.1.7"
   },
   "dependencies": {
     "pixi.js": "^8.18.1"
-  }
+  },
+  "type": "module"
 }
