@@ -1,5 +1,5 @@
 import JoiningTheQueue from '../components/joining-the-queue.js';
-import Queue from '../components/queue.js';
+import InTheQueue from '../components/in-the-queue.js';
 import type { QueryResults } from '../lib/system.js';
 import { NUMBER_OF_CUSTOMERS } from '../utils/config.js';
 import createCustomer from '../blueprints/customer.js';
@@ -8,7 +8,7 @@ import type { Entity } from '../entities/index.js';
 export function defineQueries() {
   return {
     joiners: [JoiningTheQueue],
-    inTheQueue: [Queue],
+    inTheQueue: [InTheQueue],
   };
 }
 
@@ -25,7 +25,7 @@ export function update({
 }: QueryResults<typeof defineQueries>) {
   let i = inTheQueue.length;
   for (const entity of joiners) {
-    Queue.add(entity, { position: i++ });
+    InTheQueue.add(entity, { position: i++ });
     JoiningTheQueue.remove(entity);
   }
 }

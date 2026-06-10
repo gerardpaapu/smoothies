@@ -22,7 +22,7 @@ export function update({ leavers }: QueryResults<typeof defineQueries>) {
     const position = Position.get(entity)!;
     if (position.x === Exit.x && position.y === Exit.y) {
       const details = PersonalDetails.get(entity)!;
-      console.log(`${details.name} just left`);
+      console.log(`${details.name}[${entity}] just left`);
       deleteCustomer(entity);
     }
   }

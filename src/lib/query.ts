@@ -62,7 +62,7 @@ export default function createQuery(components: Component<any>[]): Query {
 
   function isStale() {
     for (const c of components) {
-      if (lastUpdated === -1 || c.lastUpdate > lastUpdated) {
+      if (lastUpdated === -1 || c.lastUpdate >= lastUpdated) {
         return true;
       }
     }

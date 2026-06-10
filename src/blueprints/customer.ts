@@ -18,7 +18,7 @@ export default function createCustomer() {
   PersonalDetails.add(entity, {
     name: getName(entity),
     cash: 100,
-    mood: { angry: 0, sad: 0, excited: 100 },
+    mood: { angry: 0, sad: 0, excited: 1_000_000 },
     taster: randomTaster(),
   });
 

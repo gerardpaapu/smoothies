@@ -1,6 +1,6 @@
 // import all the components
 import GlobalStats from '../components/global-stats.js';
-import Queue from '../components/queue.js';
+import InTheQueue from '../components/in-the-queue.js';
 import Serving from '../components/serving.js';
 import MakingAnOrder from '../components/making-an-order.js';
 import WaitingForAnOrder from '../components/waiting-for-an-order.js';
@@ -28,7 +28,7 @@ export default [
   MakingAnOrder,
   PersonalDetails,
   Position,
-  Queue,
+  InTheQueue,
   Serving,
   SpriteName,
   TakingOrders,

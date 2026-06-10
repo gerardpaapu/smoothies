@@ -1,4 +1,4 @@
-import Queue from '../components/queue.js';
+import InTheQueue from '../components/in-the-queue.js';
 import Position from '../components/position.js';
 import MakingAnOrder from '../components/making-an-order.js';
 import WaitingForAnOrder from '../components/waiting-for-an-order.js';
@@ -17,7 +17,7 @@ import type { QueryResults } from '../lib/system.js';
 
 export function defineQueries() {
   return {
-    customers: [Queue, Position],
+    customers: [InTheQueue, Position],
     servers: [TakingOrders, Position],
   };
 }
@@ -36,7 +36,7 @@ export function update({
   let customer: Entity | undefined;
 
   for (const entity of customers) {
-    const waiting = Queue.get(entity)!;
+    const waiting = InTheQueue.get(entity)!;
     if (waiting.position === 0) {
       const position = Position.get(entity)!;
       if (position.x === QueueHead.x && position.y === QueueHead.y) {
@@ -67,7 +67,7 @@ export function update({
   const customerDetails = PersonalDetails.get(customer)!;
   const serverDetails = PersonalDetails.get(server)!;
 
-  Queue.remove(customer);
+  InTheQueue.remove(customer);
 
   const menu = GlobalStats.get(1)!.menu;
 
@@ -104,7 +104,7 @@ export function update({
 
   // now we need to re-number all but i of the customers
   for (let i = 1; i < customers.length; i++) {
-    const q = Queue.get(customers[i]!)!;
+    const q = InTheQueue.get(customers[i]!)!;
     if (q && q.position != null) {
       q.position--;
     }
