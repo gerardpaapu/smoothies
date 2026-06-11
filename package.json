@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "tsx src/main/index.ts",
+    "start": "vite",
     "test": "vitest"
   },
   "devDependencies": {
